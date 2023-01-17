@@ -1,0 +1,22 @@
+1. create a mongoDB (database) account
+2. Add my current IP Address
+3. 0.0.0.0/0	des- white listed ip address
+4. to change user -> database access 
+5. to change ip -> Network Access
+6. go to Database -> click connect -> connect your application
+7. copy - connect string
+8. go to .env 
+9. paste string inside -> DATABASE = ("...")
+10. change user and password
+11. / pachi Database name -> change
+12. then, install mongoose in terminal
+13. create a new folder - Database -> connection.js
+14. import mongoose
+15. connect ( mongoose.connet(process.env.DATABASE )
+16. go to server -> import => require('./database/connection')
+17. make a model folder -> categoryModel.js
+18. import mongoose 
+20. Schema means structure
+19. timestamps gives created time and updated time
+21. 
+
