@@ -1,0 +1,14 @@
+# Back-End-
+Back-End description
+
+npm i
+-body-parser
+-dotenv
+-express
+-express-jwt
+-jsonwebtoken
+-mongoose
+-multer ( this package is used for image upload )
+-nodemailer
+-uuidv1
+-express-validator
