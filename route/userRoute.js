@@ -1,8 +1,9 @@
 const express = require('express')
 const { register, verifyEmail, resendVerification, forgetPassword, resetPassword, getAllUsers, getUserDetail, findUser, updateUser, removeUser, signIn, signOut, deleteAll } = require('../controller/userController')
+const { userCheck, validate } = require('../Validation')
 const router = express.Router()
 
-router.post('/register',register)
+router.post('/register',userCheck, validate, register)
 router.get(`/verifyEmail/:token`, verifyEmail)
 router.post('/resendVerification',resendVerification)
 router.post('/forgotpassword',forgetPassword)
