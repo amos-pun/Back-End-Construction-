@@ -5,12 +5,14 @@ require('./Database/Connection')
 
 // middleware
 const bodyParser = require('body-parser')
+const morgan = require('morgan')
 
  // routes
 const TestRoute = require('./route/testroute')
 const CategoryRoute = require('./route/categoryRoute')
 const ProductRoute = require('./route/productRoute')
 const UserRoute = require('./route/userRoute')
+const OrderRoute = require('./route/orderRoute')
 
 
 const app = express()
@@ -18,6 +20,7 @@ const port = process.env.PORT || 8000
 
 // middleware
 app.use(bodyParser.json())
+app.use(morgan('dev'))
 
 // app.get('/hello',(request, response) => {
 //     response.send("Hello World!!!")
@@ -33,6 +36,7 @@ app.use('/api',TestRoute)
 app.use('/api', CategoryRoute)
 app.use('/api', ProductRoute)
 app.use('/api', UserRoute)
+app.use('/api', OrderRoute)
 
 app.listen(port, () =>{
     console.log(`App started at port ${port}`)

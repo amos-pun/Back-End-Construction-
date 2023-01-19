@@ -42,7 +42,7 @@ exports.userCheck = [
         .matches(/[A-Z]/).withMessage("password must be at least one Upper character")
         .matches(/[0-9]/).withMessage("password must be at least one numeric character")
         .matches(/[-+_!@#$%^&*]/).withMessage("password must be at least one special character")
-        .not().matches(/[\\;:.,]/).withMessage(" \:;., are not allowed in password")
+        .not().matches(/[\\;:.,]/).withMessage("\:;., are not allowed in password")
 ]
 // .matches ma expression ma dinu milcha .. ie. (/[-+]/)
 // .isIn ma array ma dinu milcha .. ie. (['amso','password','1234567890'])
