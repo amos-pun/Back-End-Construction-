@@ -6,6 +6,7 @@ require('./Database/Connection')
 // middleware
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
+const cors = require('cors')
 
  // routes
 const TestRoute = require('./route/testroute')
@@ -21,6 +22,7 @@ const port = process.env.PORT || 8000
 // middleware
 app.use(bodyParser.json())
 app.use(morgan('dev'))
+app.use(cors())
 
 // app.get('/hello',(request, response) => {
 //     response.send("Hello World!!!")

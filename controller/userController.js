@@ -38,7 +38,9 @@ exports.register = async (req, res) => {
     }
 
     // send token in email
-    const url = `http://localhost:5000/api/verifyEmail/${token.token}`
+    // const url = `http://localhost:5000/api/verifyEmail/${token.token}`
+    const url = `${process.env.FRONTEND_URL}/verifyEmail/${token.token}`
+
     sendEmail({
         from: "noreply@something.com",
         to: newUser.email,
@@ -48,27 +50,8 @@ exports.register = async (req, res) => {
     })
 
     res.send(newUser)
-
-    // // generate token
-    // let token = new Token({
-    //     token: crypto.randomBytes(24).toString('hex'),
-    //     user: newUser._id
-    // })
-    // if(!token){
-    //     return res.status(400).json({e+rror:"something went wrong"})
-    // }
-
-    // // send token in email
-    // const url = `http://localhost:5000/api/verifyEmail/${token.token}`
-    // sendEmail({
-    //     from: 'noreply@something.com',
-    //     to: newUser.email,
-    //     subject: "Verification Email",
-    //     text: `Click on the following link or copy paste it in browser to verify your email.${url}`,
-    //     html: `<a href="${url}"><button>verifyEmail</button></a>`
-    // })
-    
 }
+
 // to verify user
 exports.verifyEmail = async (req, res) => {
 

@@ -7,9 +7,9 @@ exports.categoryCheck = [
 ]
 
 exports.validate = (req, res, next) => {
-    const errors = validationResult(req)
-    if(!errors.isEmpty()){
-        return res.status(400).json({errors: errors.array()[0].msg})
+    const error = validationResult(req)
+    if(!error.isEmpty()){
+        return res.status(400).json({error: error.array()[0].msg})
     }
     next()
 }
@@ -32,7 +32,7 @@ exports.productCheck = [
 
 exports.userCheck = [
     check('username','username is required').notEmpty()
-        .isLength({min:3}).withMessage('Username musst be at least 3 characters'),
+        .isLength({min:3}).withMessage('Username must be at least 3 characters'),
     check('email','Email is required').notEmpty()
         .isEmail().withMessage("Email format incorrect"),
     check('password',"password is required").notEmpty()
