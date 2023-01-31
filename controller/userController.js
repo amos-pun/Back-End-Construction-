@@ -133,7 +133,8 @@ exports.resendVerification = async (req, res) => {
     }
 
     // send in email
-     const url = `http://localhost:5000/api/resetpassword/${token.token}`
+    //  const url = `http://localhost:5000/api/resetpassword/${token.token}`
+     const url = `${process.env.FRONTEND_URL}/resetpassword/${token.token}`
      sendEmail({
          from:"noreply@gmail.com",
          to: user.email,
