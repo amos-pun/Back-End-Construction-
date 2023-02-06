@@ -39,6 +39,7 @@ app.use('/api', CategoryRoute)
 app.use('/api', ProductRoute)
 app.use('/api', UserRoute)
 app.use('/api', OrderRoute)
+app.use('/api/public/uploads',express.static('public/uploads'))
 
 app.listen(port, () =>{
     console.log(`App started at port ${port}`)

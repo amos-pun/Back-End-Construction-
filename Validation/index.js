@@ -22,7 +22,7 @@ exports.productCheck = [
         .isNumeric().withMessage('Price must be a number'),
 
     check('product_description','Description is required').notEmpty()
-        .isLength({min:20}).withMessage('Description must be at least 20 character'),
+        .isLength({max:20}).withMessage('Description must not exceed 20 character'),
 
     check('category','category is required').notEmpty(),
 
