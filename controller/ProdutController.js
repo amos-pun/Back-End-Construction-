@@ -81,9 +81,18 @@ exports.deleteProduct = (req,res) => {
         if(!product){
             return  res.status(400).json({error:"Product not found"})
         }
-        return res.status(200).json({messgae:"Product deleted successfully"})
+        return res.status(200).json({message:"Product deleted successfully"})
     })
     .catch(error=>{
         return res.status(400).json({error:error.message})
     })
+}
+
+// to get product details
+exports.productDetail = async ( req, res ) => {
+    let product = await Product.findById(req.params.id).populate('category')
+    if(!product){
+        return res.status(400).json({error:"Something is wrong"})
+    }
+    res.send(product)
 }

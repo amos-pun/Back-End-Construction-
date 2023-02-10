@@ -14,6 +14,7 @@ router.get('/findusers', findUser)
 router.put('/updateuser/:id',updateUser)
 router.delete('/removeuser', removeUser)
 router.delete('/deleteall', deleteAll)
+
 router.post('/signin', validate, userCheck, signIn)
 router.get('/signout', signOut)
 
