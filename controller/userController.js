@@ -16,6 +16,7 @@ exports.register = async (req, res) => {
     if(user){
         return res.status(400).json({error:"Email already exists."})
     }
+
     let newUser = new User({
         username: username,
         email : email,
@@ -39,14 +40,14 @@ exports.register = async (req, res) => {
 
     // send token in email
     // const url = `http://localhost:5000/api/verifyEmail/${token.token}`
-    const url = `${process.env.FRONTEND_URL}/verifyEmail/${token.token}`
+    const url1 = `${process.env.FRONTEND_URL}/verifyEmail/${token.token}`
 
     sendEmail({
         from: "noreply@something.com",
         to: newUser.email,
         subject: "Verification Email",
-        text: `Click to verify email. ${url}`,
-        html: `<a href="${url}"><button>Verify Email</button></a>`
+        text: `Click to verify email. ${url1}`,
+        html: `<a href="${url1}"><button>Verify</button></a>`
     })
 
     res.send(newUser)
@@ -101,13 +102,15 @@ exports.resendVerification = async (req, res) => {
         return res.status(400).json({error:"Something went wrong"})
     }
     // send token in email
-    const url = `http://localhost:5000/api/verifyEmail/${token.token}`
+    // const url = `http://localhost:5000/api/verifyEmail/${token.token}`
+    const aa = `${process.env.FRONTEND_URL}/verifyEmail/${token.token}`
+
     sendEmail({
         from: "noreply@something.com",
         to: user.email,
         subject: "Verification Email",
-        text: `Click to verify email. ${url}`,
-        html: `<a href="${url}"><button>Verify Email</button></a>`
+        text: `Click to verify email. ${aa}`,
+        html: `<a href="${aa}"><button>Verify Email</button></a>`
     })
 
     res.send({message:"Verification link has been sent to your email."});
@@ -171,7 +174,7 @@ exports.resetPassword = async (req, res) => {
 // for example.. produt ma category join garnu lai populate gareyko cha.
 exports.getAllUsers = async (req, res) => {
     let users = await User.find()
-    .select(['username','email'])
+    .select(['username','email','role'])
     // array .select(['username','email'])
     if(!users){
         return res.status(400).json({error:"user do not exist"})
@@ -216,9 +219,35 @@ exports.updateUser = async(req,res)=>{
     res.send(user)
 }
 
+// to update role Admin
+exports.updateRoleAdmin = async(req,res)=>{
+    let user = await User.findByIdAndUpdate(req.params.id,
+        {
+            role: 1
+        }   
+    ,{new:true})
+    if(!user){
+        return res.send({error:"Cannot update your request"})
+    }
+    res.send(user)
+}
+
+// to update role user
+exports.updateRoleUser = async(req,res)=>{
+    let user = await User.findByIdAndUpdate(req.params.id,
+        {
+            role: 0
+        }   
+    ,{new:true})
+    if(!user){
+        return res.send({error:"Cannot update your request"})
+    }
+    res.send(user)
+}
+
 // to remove username
 exports.removeUser = async (req, res) => {
-    let user = await User.findByIdAndDelete(req.body.id)
+    let user = await User.findByIdAndDelete(req.params.id)
     if(!user){
         return res.send({error:"Cannot remove"})
     }
@@ -272,7 +301,8 @@ exports.signOut = async (req, res) => {
 }
 
 // for authorization
-// jo koi ley roduct add garna mildaina .. or anyone do not have access to add products or category
+// jo koi ley product add garna mildaina .. or anyone do not have access to add products or category
+//  this for admin purpose only
 exports.requireSignin = expressjwt({
     algorithms : ['HS256'],
     secret : process.env.JWT_SECRET

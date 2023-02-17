@@ -96,3 +96,39 @@ exports.productDetail = async ( req, res ) => {
     }
     res.send(product)
 }
+
+
+// to get filltered products
+exports.getFillteredProduct = async ( req, res ) => { console.log(req.body)
+    let sortBy = req.query.sortBy ? req.query.sortBy : 'createdAt'
+    let order = req.query.order ? req.query.order : '1'
+    // 1, asc, ascending - ascending, 0, desc, descending - descending
+    let limit = req.query.limit ? Number(req.query.limit) : 9999999
+    
+    let Args = {}
+    for( let key in req.body.filter){
+        if(req.body.filter[key].length>0){
+            if(key === 'product_price'){
+                Args [key] = {
+                    // $gte greater than equals to
+                    $gte: req.body.filter[key][0],
+                    $lte: req.body.filter[key][1]
+                }
+            }
+            else{
+                Args[key] = req.body.filter[key]
+            }
+        }
+    }
+    let filteredProducts = await Product.find(Args).populate('category').sort([[sortBy,order]]).limit(limit)
+    if(!filteredProducts){
+        return res.status(400).json({error:"Something went wrong"})
+    }
+    res.send(filteredProducts)
+}
+
+/* filter : {
+    product_price : [1000, 9999],
+    category:['abc', '']
+}
+*/
